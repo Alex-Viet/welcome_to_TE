@@ -7,8 +7,12 @@ import styles from './page.module.css';
 
 import { fetchOnePost } from '@/libs/fetchOnePost';
 
+const POST_CACHE_KEY = 'shared_post';
+
+const useOnePost = () => useSWR(POST_CACHE_KEY, fetchOnePost);
+
 const ComponentOne = () => {
-    const { data } = useSWR('custom_key_1', fetchOnePost);
+    const { data } = useOnePost();
     //...some logic
 
     return data ? (
@@ -23,7 +27,7 @@ const ComponentOne = () => {
 };
 
 const ComponentTwo = () => {
-    const { data } = useSWR('custom_key_2', () => fetchOnePost({ delayMS: 2000 }));
+    const { data } = useOnePost();
     //...some logic
 
     return data ? (
